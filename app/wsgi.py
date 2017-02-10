@@ -6,7 +6,7 @@ from resources.health_check import HealthCheck
 def get_app():
     app = falcon.API()
 
-    app.add_route("/health_check", HealthCheck())
+    app.add_route("/health_checks", HealthCheck())
 
     return app
 
