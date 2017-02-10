@@ -3,6 +3,7 @@ version: '2'
 services:
   app:
     build: .
+    container_name: falcon_api
     depends_on:
       - db
     links:
@@ -15,6 +16,7 @@ services:
       DATABASE_URL: "mysql+pymysql://root:ThisIsNotASecurePassword123@db/profile_manager"
 
   db:
+    container_name: mysql_db
     image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: "ThisIsNotASecurePassword123"
