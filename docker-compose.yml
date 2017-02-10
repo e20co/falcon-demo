@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./app:/app
+    ports:
+      - "3000:80"
+    environment:
+      DATABASE_URL: "mysql+pymysql://root:ThisIsNotASecurePassword123@db/profile_manager"
+
+  db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "ThisIsNotASecurePassword123"
+      MYSQL_DATABASE: "profile_manager"
+    volumes:
+      - /tmp/profile_manager_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306

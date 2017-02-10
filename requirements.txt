@@ -1,0 +1,6 @@
+circus==0.14.0
+falcon==1.1.0
+marshmallow==2.10.5
+pymysql==0.7.0
+SQLAlchemy==1.1.4
+uwsgi==2.0.14
