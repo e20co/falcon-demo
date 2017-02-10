@@ -1,12 +1,12 @@
 import falcon
 
-from resources.health_check import HealthCheck
+from resources.health_checks.view import HealthCheckView
 
 
 def get_app():
     app = falcon.API()
 
-    app.add_route("/health_checks", HealthCheck())
+    app.add_route("/health_checks", HealthCheckView())
 
     return app
 
