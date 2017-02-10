@@ -16,7 +16,7 @@ def get_health_check(health_check_id):
     # ...but for now, we'll just return a new instance
     fake_model = HealthCheck()
     fake_model.status = 200
-    fake_model.message = "I am healthy. If you are reading this, congratulations!"
+    fake_model.message = "I am healthy. If you are reading this, it means you're connected!"
     return fake_model
 
 

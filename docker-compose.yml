@@ -25,3 +25,8 @@ services:
       - "3306:3306"
     expose:
       - 3306
+
+networks:
+  default:
+    external:
+      name: demo-applications
