@@ -1,4 +1,4 @@
-# from db import Session
+from db import Session, scoped_session
 from models import HealthCheck
 
 
@@ -10,11 +10,25 @@ def get(health_check_id):
         models.HealthCheck
     """
 
-    # Typically, we would load the HealthCheck from the db...
-    # return Session().query(HealthCheck).get(health_check_id)
+    # Load the HealthCheck from the db
+    return Session().query(HealthCheck).get(health_check_id)
 
-    # ...but for now, we'll just return a new instance
-    fake_model = HealthCheck()
-    fake_model.status = 200
-    fake_model.message = "I am healthy. If you are reading this, it means you're connected!"
-    return fake_model
+
+def create(message):
+    """Adds a health_check to the DB and queues it for upload
+
+    Args:
+        message (str): The message of the health_check
+    """
+    with scoped_session() as session:
+        # Insert the health_check into the DB
+        health_check = HealthCheck()
+        health_check.message = message
+
+        session.add(health_check)
+        session.commit()
+
+        # Return the health_check ID so that the caller can track its progress
+        _id = health_check.id
+
+    return get(_id)

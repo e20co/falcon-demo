@@ -37,9 +37,40 @@ class HealthCheckView(object):
 
         health_check = controller.get(health_check_id)
 
-        if not health_check:
-            resp.status = falcon.HTTP_404
+        # if not health_check:
+        #     resp.status = falcon.HTTP_404
 
+        resp.body = json.dumps(self.get_metadata(health_check))
+
+    def on_post(self, req, resp):
+        """
+        Handler for POST requests to add health checks
+
+        .. http:post:: /health_checks/
+
+           Add health check messages
+
+           **Example request**:
+
+           .. sourcecode:: http
+
+              POST /health_checks/ HTTP/1.1
+              Content-Type: application/json
+
+              [ { "message": "Example message." } ]
+
+           :reqheader Content-Type: application/json
+
+           :statuscode 202: Success
+           :statuscode 400: Malformed request
+        """
+
+        body = req.stream.read()
+        payload = json.loads(body.decode('utf-8'))
+
+        health_check = controller.create(payload['message'])
+
+        resp.status = falcon.HTTP_201
         resp.body = json.dumps(self.get_metadata(health_check))
 
     def get_metadata(self, health_check):
@@ -52,7 +83,7 @@ class HealthCheckView(object):
 
         data = {}
 
-        data["status"] = health_check.status
+        data["id"] = health_check.id
         data["message"] = health_check.message
 
         return data
