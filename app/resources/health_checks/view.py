@@ -2,7 +2,7 @@ import json
 
 import falcon
 
-import controller
+from . import controller
 
 
 class HealthCheckView(object):

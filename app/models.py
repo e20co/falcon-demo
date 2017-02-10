@@ -9,4 +9,4 @@ class HealthCheck(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     status = Column(Integer)
-    message = Column(String)
+    message = Column(String(255))
